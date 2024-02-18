@@ -13,13 +13,21 @@ Shader::Shader()
 
 Shader::~Shader()
 {
-
+    Clear();
 }
 
 Shader& Shader::Use()
 {
     glUseProgram(id_);
     return *this;
+}
+
+void Shader::Clear()
+{
+    if (id_ != 0) {
+        glDeleteProgram(id_);
+        id_ = 0;
+    }
 }
 
 void Shader::Compile(std::string_view vertex_source, std::string_view fragment_source, std::string_view geometry_source)
@@ -53,7 +61,7 @@ void Shader::Compile(std::string_view vertex_source, std::string_view fragment_s
     }
 }
 
-void Shader::SetFloat(std::string_view name, float value, bool use_shader)
+void Shader::SetFloat(const std::string& name, float value, bool use_shader)
 {
     if (use_shader) {
         Use();
@@ -61,7 +69,7 @@ void Shader::SetFloat(std::string_view name, float value, bool use_shader)
     glUniform1f(GetUniformLocation(name), value);
 }
 
-void Shader::SetInteger(std::string_view name, int32_t value, bool use_shader)
+void Shader::SetInteger(const std::string& name, int32_t value, bool use_shader)
 {
     if (use_shader) {
         Use();
@@ -69,7 +77,7 @@ void Shader::SetInteger(std::string_view name, int32_t value, bool use_shader)
     glUniform1i(GetUniformLocation(name), value);
 }
 
-void Shader::SetVector2f(std::string_view name, float x, float y, bool use_shader)
+void Shader::SetVector2f(const std::string& name, float x, float y, bool use_shader)
 {
     if (use_shader) {
         Use();
@@ -77,7 +85,7 @@ void Shader::SetVector2f(std::string_view name, float x, float y, bool use_shade
     glUniform2f(GetUniformLocation(name), x, y);
 }
 
-void Shader::SetVector2f(std::string_view name, const  glm::vec2& value, bool use_shader)
+void Shader::SetVector2f(const std::string& name, const  glm::vec2& value, bool use_shader)
 {
     if (use_shader) {
         Use();
@@ -85,7 +93,7 @@ void Shader::SetVector2f(std::string_view name, const  glm::vec2& value, bool us
     glUniform2f(GetUniformLocation(name), value.x, value.y);
 }
 
-void Shader::SetVector3f(std::string_view name, float x, float y, float z, bool use_shader)
+void Shader::SetVector3f(const std::string& name, float x, float y, float z, bool use_shader)
 {
     if (use_shader) {
         Use();
@@ -93,7 +101,7 @@ void Shader::SetVector3f(std::string_view name, float x, float y, float z, bool 
     glUniform3f(GetUniformLocation(name), x, y, z);
 }
 
-void Shader::SetVector3f(std::string_view name, const glm::vec3& value, bool use_shader)
+void Shader::SetVector3f(const std::string& name, const glm::vec3& value, bool use_shader)
 {
     if (use_shader) {
         Use();
@@ -101,7 +109,7 @@ void Shader::SetVector3f(std::string_view name, const glm::vec3& value, bool use
     glUniform3f(GetUniformLocation(name), value.x, value.y, value.z);
 }
 
-void Shader::SetVector4f(std::string_view name, float x, float y, float z, float w, bool use_shader)
+void Shader::SetVector4f(const std::string& name, float x, float y, float z, float w, bool use_shader)
 {
     if (use_shader) {
         Use();
@@ -109,7 +117,7 @@ void Shader::SetVector4f(std::string_view name, float x, float y, float z, float
     glUniform4f(GetUniformLocation(name), x, y, z, w);
 }
 
-void Shader::SetVector4f(std::string_view name, const glm::vec4& value, bool use_shader)
+void Shader::SetVector4f(const std::string& name, const glm::vec4& value, bool use_shader)
 {
     if (use_shader) {
         Use();
@@ -117,7 +125,7 @@ void Shader::SetVector4f(std::string_view name, const glm::vec4& value, bool use
     glUniform4f(GetUniformLocation(name), value.x, value.y, value.z, value.w);
 }
 
-void Shader::SetMatrix4f(std::string_view name, const glm::mat4& value, bool use_shader)
+void Shader::SetMatrix4f(const std::string& name, const glm::mat4& value, bool use_shader)
 {
     if (use_shader) {
         Use();
@@ -125,7 +133,7 @@ void Shader::SetMatrix4f(std::string_view name, const glm::mat4& value, bool use
     glUniformMatrix4fv(GetUniformLocation(name), 1, false, glm::value_ptr(value));
 }
 
-int32_t Shader::GetUniformLocation(std::string_view name)
+int32_t Shader::GetUniformLocation(const std::string& name)
 {
     auto it = location_cache_.find(name);
     if (it != location_cache_.end()) {

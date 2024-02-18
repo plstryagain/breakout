@@ -20,6 +20,7 @@ public:
     void ProcessInput(float delta_time);
     void Update(float delta_time);
     void Render();
+    void SetKey(int32_t key, bool value);
 
 private:
     uint32_t width_;

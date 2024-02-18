@@ -30,3 +30,8 @@ void Game::Render()
 {
 
 }
+
+void Game::SetKey(int32_t key, bool value)
+{
+    keys_[key] = value;
+}
