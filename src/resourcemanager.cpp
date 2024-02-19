@@ -13,30 +13,28 @@ ResourceManager::ResourceManager()
 
 ResourceManager::~ResourceManager()
 {
-
+    Clear();
 }
 
-Shader ResourceManager::LoadShader(const std::filesystem::path& vshader_file_path, const std::filesystem::path& fshader_file_path, 
+Shader& ResourceManager::LoadShader(const std::filesystem::path& vshader_file_path, const std::filesystem::path& fshader_file_path, 
                     const std::filesystem::path& gshader_file_path, const std::string& name)
 {
-    Shader shader = LoadShaderFromFile(vshader_file_path, fshader_file_path, gshader_file_path);
-    shaders_[name] = shader;
-    return shader;
+    shaders_[name] = LoadShaderFromFile(vshader_file_path, fshader_file_path, gshader_file_path);
+    return shaders_[name];
 }
 
-Shader ResourceManager::GetShader(const std::string& name)
+Shader& ResourceManager::GetShader(const std::string& name)
 {
     return shaders_[name];
 }
 
-Texture2D ResourceManager::LoadTexture2d(const std::filesystem::path& file_path, bool alpha, const std::string& name)
+Texture2D& ResourceManager::LoadTexture2d(const std::filesystem::path& file_path, bool alpha, const std::string& name)
 {
-    Texture2D tex = LoadTexture2DFromFile(file_path, alpha);
-    textures2d_[name] = tex;
-    return tex;
+    textures2d_[name] = LoadTexture2DFromFile(file_path, alpha);
+    return textures2d_[name];
 }
 
-Texture2D ResourceManager::GetTexture2D(const std::string& name)
+Texture2D& ResourceManager::GetTexture2D(const std::string& name)
 {
     return textures2d_[name];
 }

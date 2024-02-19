@@ -15,7 +15,7 @@ Texture2D::Texture2D(bool alpha)
 
 Texture2D::~Texture2D()
 {
-    Clear();
+
 }
 
 void Texture2D::Generate(uint32_t width, uint32_t height, const std::vector<unsigned char>& data)

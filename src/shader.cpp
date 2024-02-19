@@ -13,7 +13,7 @@ Shader::Shader()
 
 Shader::~Shader()
 {
-    Clear();
+
 }
 
 Shader& Shader::Use()

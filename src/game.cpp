@@ -15,10 +15,10 @@ Game::~Game()
 
 void Game::Init()
 {
-    ResourceManager::getInstance().LoadShader("assets/shaders/sprite.vert", "assets/shaders/sprite.frag", "", "sprite");
+    Shader& sprite_shader = ResourceManager::getInstance().LoadShader("assets/shaders/sprite.vert", "assets/shaders/sprite.frag", "", "sprite");
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width_), static_cast<float>(height_), 0.0f, -1.0f, 1.0f);
-    ResourceManager::getInstance().GetShader("sprite").Use().SetInteger("image", 0);
-    ResourceManager::getInstance().GetShader("sprite").Use().SetMatrix4f("projection", projection);
+    sprite_shader.Use().SetInteger("image", 0);
+    sprite_shader.Use().SetMatrix4f("projection", projection);
     sprite_renderer_ = std::make_unique<SpriteRenderer>(ResourceManager::getInstance().GetShader("sprite"));
     ResourceManager::getInstance().LoadTexture2d("assets/textures/awesomeface.png", true, "face");
 }
