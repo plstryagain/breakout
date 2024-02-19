@@ -6,8 +6,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-inline constexpr uint32_t SCREEN_WIDTH = 1024;
-inline constexpr uint32_t SCREEN_HEIGHT = 768;
+inline constexpr uint32_t SCREEN_WIDTH = 800;
+inline constexpr uint32_t SCREEN_HEIGHT = 600;
 
 Game breakout{SCREEN_WIDTH, SCREEN_HEIGHT};
 
