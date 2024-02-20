@@ -86,6 +86,10 @@ Texture2D ResourceManager::LoadTexture2DFromFile(const std::filesystem::path& fi
     int32_t height = 0;
     int32_t nr_channels = 0;
     auto data = stbi_load(file_path.u8string().data(), &width, &height, &nr_channels, 0);
+    if (!data) {
+        std::string str_error = "Failed to load texture from file: " + file_path.u8string();
+        throw std::runtime_error(str_error);
+    }
     texture.Generate(width, height, data);
     stbi_image_free(data);
     return texture;

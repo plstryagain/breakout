@@ -1,9 +1,11 @@
 #pragma once
 
 #include "spriterenderer.h"
+#include "gamelevel.h"
 
 #include <stdint.h>
 #include <memory>
+#include <vector>
 
 enum class GameState
 {
@@ -31,4 +33,6 @@ private:
     GameState state_;
     bool keys_[1024];
     std::unique_ptr<SpriteRenderer> sprite_renderer_;
+    std::vector<GameLevel> levels_;
+    uint32_t level_;
 };
