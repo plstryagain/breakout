@@ -3,7 +3,11 @@
 #include "resourcemanager.h"
 
 #include <glm/ext/matrix_clip_space.hpp>
-#include <vcruntime.h>
+#include <GLFW/glfw3.h>
+#include <memory>
+
+inline constexpr glm::vec2 PLAYER_SIZE{100.0f, 20.0f};
+inline constexpr float PLAYER_VELOCITY{500.0f};
 
 Game::Game(uint32_t width, uint32_t height)
     : width_{width}, height_{height}, state_{GameState::GAME_ACTIVE}, keys_{}
@@ -27,6 +31,7 @@ void Game::Init()
     ResourceManager::getInstance().LoadTexture2d("assets/textures/background.jpg", false, "background");
     ResourceManager::getInstance().LoadTexture2d("assets/textures/brick.png", false, "brick");
     ResourceManager::getInstance().LoadTexture2d("assets/textures/solid_brick.png", false, "solid_brick");
+    ResourceManager::getInstance().LoadTexture2d("assets/textures/paddle.png", true, "paddle");
 
     std::vector<std::string> level_assets = {
         "assets/levels/1.txt",
@@ -39,6 +44,8 @@ void Game::Init()
         levels_.at(i).Load(level_assets.at(i), width_, height_ / 2);
     }
     level_ = 0;
+    glm::vec2 player_pos{width_ / 2.0f - PLAYER_SIZE.x / 2.0f, height_ - PLAYER_SIZE.y};
+    player_ = std::make_unique<GameObject>(player_pos, PLAYER_SIZE, ResourceManager::getInstance().GetTexture2D("paddle"));
 }
 
 void Game::ProcessInput(float delta_time)
@@ -48,7 +55,19 @@ void Game::ProcessInput(float delta_time)
 
 void Game::Update(float delta_time)
 {
-
+    if (state_ == GameState::GAME_ACTIVE) {
+        float velocity = PLAYER_VELOCITY * delta_time;
+        if (keys_[GLFW_KEY_A]) {
+            if (player_->GetPosistion().x >= 0.0f) {
+                player_->ChangePosisiton(-1 * velocity, 0.0f);
+            }
+        }
+        if (keys_[GLFW_KEY_D]) {
+            if (player_->GetPosistion().x <= width_ - player_->GetSize().x) {
+                player_->ChangePosisiton(velocity, 0.0f);
+            }
+        }
+    }
 }
 
 void Game::Render()
@@ -57,6 +76,7 @@ void Game::Render()
         sprite_renderer_->DrawSprite(ResourceManager::getInstance().GetTexture2D("background"),
                                     glm::vec2{0.0f, 0.0f}, glm::vec2{width_, height_}, 0.0f);
         levels_.at(level_).Draw(*sprite_renderer_.get());
+        player_->Draw(*sprite_renderer_.get());
     }
 }
 

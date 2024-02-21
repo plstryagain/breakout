@@ -6,6 +6,13 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#ifdef _WIN32
+#include <Windows.h>
+extern "C" {
+    _declspec(dllexport) DWORD NvOptimusEnablement = 1;
+}
+#endif
+
 inline constexpr uint32_t SCREEN_WIDTH = 800;
 inline constexpr uint32_t SCREEN_HEIGHT = 600;
 

@@ -15,6 +15,9 @@ public:
     virtual void Draw(SpriteRenderer& renderer);
     bool IsDestroyed() const;
     bool IsSolid() const;
+    glm::vec2 GetPosistion() const;
+    void ChangePosisiton(float add_x, float add_y);
+    glm::vec2 GetSize() const;
 
 private:
     float rotation_;

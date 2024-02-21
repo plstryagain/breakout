@@ -33,3 +33,19 @@ bool GameObject::IsSolid() const
 {
     return is_solid_;
 }
+
+glm::vec2 GameObject::GetPosistion() const
+{
+    return position_;
+}
+
+void GameObject::ChangePosisiton(float add_x, float add_y)
+{
+    position_.x += add_x;
+    position_.y += add_y;
+}
+
+glm::vec2 GameObject::GetSize() const
+{
+    return size_;
+}

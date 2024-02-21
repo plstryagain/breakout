@@ -35,4 +35,5 @@ private:
     std::unique_ptr<SpriteRenderer> sprite_renderer_;
     std::vector<GameLevel> levels_;
     uint32_t level_;
+    std::unique_ptr<GameObject> player_;
 };
